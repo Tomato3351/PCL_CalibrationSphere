@@ -1,0 +1,27 @@
+{
+    "PassThroghXMin":-720.0,
+    "PassThroghXMax":550.0,
+    "PassThroghYMin":-500.0,
+    "PassThroghYMax":500.0,
+    "PassThroghZMin":600.0,
+    "PassThroghZMax":1450.0,
+    "PassThroghIMin":0,
+    "PassThroghIMax":91500.0,
+	"BGLeafSize":400,
+	
+	"SORMeanK":50,
+	"SORStddevMulThresh":1,
+	
+	"PLANormalKSearch":50,
+	"PLANormalDistanceWeight":0.1,
+	"PLAMaxIterations":300,
+	"PLADistanceThreshold":20,
+	
+	"SPHNormalKSearch":30,
+	"SPHNormalDistanceWeight":0.05,
+	"SPHMaxIterations":10000,
+	"SPHDistanceThreshold":15,
+	"SPHMinRadius":80,
+	"SPHMaxRadius":160
+}
+

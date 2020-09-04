@@ -1,0 +1,52 @@
+{
+	"calibdataPath":"calib_data/",	
+	"calibdataFilename":"CALIB_DATA.xml",
+	"pcdFilePath":"D:/projects/LUCID_paperbox828/CapturePCD/Images/ball/",
+	"mode":"EyeInHand",
+	"coordinateDifference": 0,
+	"estimateMethod":"SVD",
+	"capture_pos":{
+        "type_id": "opencv-matrix",
+        "rows": 1,
+        "cols": 3,
+        "dt": "f",
+        "data": [
+		1000.0, 0.0, 862.0
+		]
+    },
+	"grab_pos":{
+        "type_id": "opencv-matrix",
+        "rows": 1,
+        "cols": 3,
+        "dt": "f",
+        "data": [
+		1080.0, 0.0, -280.0
+		]
+    },
+	
+	"robot_pos": {
+        "type_id": "opencv-matrix",
+        "rows": 12,
+        "cols": 3,
+        "dt": "f",
+        "data": [
+		0.0, 0.0, 0.0,
+		0.0, 100.0, -50.0,
+		-100.0, 100.0, -100.0,
+		-100.0, 0.0, -150.0,
+		-100.0, -100.0, -200.0,
+		0.0, -100.0, -250.0,
+		100.0, -100.0, -300.0,
+		100.0, 0.0, -350.0,
+		100.0, 100.0, -400.0,
+		0.0, 100.0, -450.0,
+		-100.0, 100.0, -500.0,
+		-100.0, 0.0, -550.0]
+    }
+	
+	
+	
+	
+	
+}
+
