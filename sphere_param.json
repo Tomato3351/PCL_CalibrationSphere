@@ -21,7 +21,7 @@
 	"SPHNormalDistanceWeight":0.05,
 	"SPHMaxIterations":10000,
 	"SPHDistanceThreshold":15,
-	"SPHMinRadius":80,
-	"SPHMaxRadius":160
+	"SPHMinRadius":50,
+	"SPHMaxRadius":130
 }
 

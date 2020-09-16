@@ -13,7 +13,7 @@
 
 #pragma   pop_macro("min")  
 #pragma   pop_macro("max")
-
+#include <opencv2/core/eigen.hpp>
 #include <opencv2/opencv.hpp>
 #include <future>
 
@@ -65,22 +65,26 @@ void Calibration::printCfg() {
 		this->cfg.robot_pos << std::endl;
 	std::cout << "camera_pos = " <<
 		this->cfg.camera_pos << std::endl;
-
 }
+
 CalibData Calibration::calibrate() {
 	//pcl::TransformationFromCorrespondences tfc;
 	//tfc.add
-	
-
-
-
 
 	// 计算转换矩阵
-
 	CalibData cdata;
-	cv::Mat homo_camera, homo_robot, homo_camera_inv, robot_negate;
-	robot_negate = -(this->cfg.robot_pos);// 机器人运动方向于视觉中方向相反。
-	std::cout << robot_negate << std::endl;
+	cv::Mat homo_camera, homo_robot, homo_camera_inv, robot_negate, to_points;
+
+	if (cfg.mode == "EyeInHand")
+		// EyeInHand模式下机器人运动方向于视觉中方向相反。
+		to_points = -(this->cfg.robot_pos);
+	else if (cfg.mode == "EyeToHand")
+		to_points = this->cfg.robot_pos;
+	else {
+		std::cout << "Mode error: EyeInHand or EyeToHand. " << std::endl;
+		return cdata;
+	}
+	std::cout << "to_points =\n"<<to_points << std::endl;
 	if (this->cfg.coordinateDifference) {
 		this->cfg.camera_pos.col(-1) = -this->cfg.camera_pos.col(-1);
 	}
@@ -88,7 +92,7 @@ CalibData Calibration::calibrate() {
 
 	cv::vconcat(this->cfg.camera_pos.t(), cv::Mat::ones(1, this->cfg.camera_pos.rows, CV_32FC1), homo_camera);
 	std::cout << "homo_camera= \n" << homo_camera << std::endl;
-	cv::vconcat(robot_negate.t(), cv::Mat::ones(1, this->cfg.robot_pos.rows, CV_32FC1), homo_robot);
+	cv::vconcat(to_points.t(), cv::Mat::ones(1, this->cfg.robot_pos.rows, CV_32FC1), homo_robot);
 	std::cout << "homo_robot = \n" << homo_robot << std::endl;
 	if (this->cfg.estimateMethod == "SVD") {
 		// 使用伪逆矩阵
@@ -99,15 +103,39 @@ CalibData Calibration::calibrate() {
 	else if (this->cfg.estimateMethod == "RANSAC") {
 		//***************************使用cv::estimateAffine3D*******************************
 		cv::Mat trans_m, trans_m32, trans_m_homo, inliers;
-		cv::estimateAffine3D(this->cfg.camera_pos, robot_negate, trans_m, inliers);
+		cv::estimateAffine3D(this->cfg.camera_pos, to_points, trans_m, inliers);
 		std::cout << "trans_m = \n" << trans_m << std::endl;
 		std::cout << "inliers=\n" << inliers << std::endl;
 		trans_m.convertTo(trans_m32, CV_32FC1);
 		cv::Mat m = (cv::Mat_<float>(1, 4) << 0, 0, 0, 1);
 		cv::vconcat(trans_m32, m, cdata.transMatrix);
 		std::cout << "transMatrix=\n" << cdata.transMatrix << std::endl;
+		//***************************使用cv::estimateAffine3D end*******************************
 	}
-	//***************************使用cv::estimateAffine3D end*******************************
+	else if (this->cfg.estimateMethod == "FromCorr") {
+		//*****************使用pcl::TransformationFromCorrespondences**************************
+		pcl::TransformationFromCorrespondences transFromCorr;
+
+		for (int i = 0; i < to_points.rows; i++) {
+			Eigen::Vector3f from(
+				cfg.camera_pos.at<float>(i,0),
+				cfg.camera_pos.at<float>(i, 1), 
+				cfg.camera_pos.at<float>(i, 2));
+			Eigen::Vector3f to(
+				to_points.at<float>(i, 0),
+				to_points.at<float>(i, 1),
+				to_points.at<float>(i, 2));
+			transFromCorr.add(from, to, 1.0);
+		}
+		 auto m = transFromCorr.getTransformation().matrix();
+		 cv::eigen2cv(m, cdata.transMatrix);
+		 std::cout << "transMatrix=\n" << cdata.transMatrix << std::endl;
+		//***************使用pcl::TransformationFromCorrespondences end************************
+	}
+	else {
+		std::cout << "Unkwnown estimateMethod" << std::endl;
+	}
+
 	// 求translate
 
 	std::cout << "capture_pos = \n" << this->cfg.capture_pos << std::endl;
@@ -204,6 +232,7 @@ void SphereDetector::readParam(const std::string& file_path) {
 	}
 	fs.release();
 };
+
 void SphereDetector::printParam() {
 	std::cout << "SphereDetector Params: " << std::endl;
 	std::cout << "PassThroghXMin = " <<
@@ -315,7 +344,7 @@ void SphereDetector::setInputCloud(pcl::PointCloud<pcl::PointXYZI>::Ptr cloud){
 	//extract_foreg.filter(*background);
 	//pcl::io::savePCDFile("foreground.pcd", *foreground);
 	//pcl::io::savePCDFile("background.pcd", *background);
-	//// ***********背景减除end********
+	// ***********背景减除end********
 	// 滤波
 		// sor
 	pcl::StatisticalOutlierRemoval<PointT> sor;// StatisticalOutlierRemoval滤波器 

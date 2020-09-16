@@ -1,10 +1,10 @@
 {
 	"calibdataPath":"calib_data/",	
 	"calibdataFilename":"CALIB_DATA.xml",
-	"pcdFilePath":"D:/projects/LUCID_paperbox828/CapturePCD/Images/ball/",
+	"pcdFilePath":"D:/projects/LUCID_paperbox828/CapturePCD/Images/11/",
 	"mode":"EyeInHand",
 	"coordinateDifference": 0,
-	"estimateMethod":"SVD",
+	"estimateMethod":"FromCorr",
 	"capture_pos":{
         "type_id": "opencv-matrix",
         "rows": 1,
@@ -20,7 +20,7 @@
         "cols": 3,
         "dt": "f",
         "data": [
-		1080.0, 0.0, -280.0
+		1000.0, 0.0, 862.0
 		]
     },
 	
