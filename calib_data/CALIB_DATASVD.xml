@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<opencv_storage>
+<transform_matrix type_id="opencv-matrix">
+  <rows>4</rows>
+  <cols>4</cols>
+  <dt>f</dt>
+  <data>
+    -5.80068752e-02 -1.00026357e+00 -1.08219692e-02 -4.58799267e+00
+    -9.63658214e-01 4.46671434e-02 -4.93436716e-02 -8.66809654e+00
+    1.93332434e-02 2.17858050e-02 -1.00976229e+00 1.29757544e+03
+    1.40971679e-10 -4.36557457e-11 -2.24758878e-10 1.</data></transform_matrix>
+<translate type_id="opencv-matrix">
+  <rows>1</rows>
+  <cols>3</cols>
+  <dt>f</dt>
+  <data>
+    0. 0. 0.</data></translate>
+<coordinateDifference>0</coordinateDifference>
+</opencv_storage>
