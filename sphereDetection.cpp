@@ -137,11 +137,12 @@ CalibData Calibration::calibrate() {
 	}
 
 	// 求translate
-
-	std::cout << "capture_pos = \n" << this->cfg.capture_pos << std::endl;
-	std::cout << "grab_pos = \n" << this->cfg.grab_pos << std::endl;
-	cdata.translate = this->cfg.grab_pos - this->cfg.capture_pos;
-	std::cout << "translate = \n" << cdata.translate << std::endl;
+	// (此处不求translate,改为在TranslateCorrection项目中动态较准)
+	//std::cout << "capture_pos = \n" << this->cfg.capture_pos << std::endl;
+	//std::cout << "grab_pos = \n" << this->cfg.grab_pos << std::endl;
+	//cdata.translate = this->cfg.grab_pos - this->cfg.capture_pos;
+	//std::cout << "translate = \n" << cdata.translate << std::endl;
+	cdata.translate = (cv::Mat_<float>(1, 3) << 0, 0, 0);
 
 	// 写入标定结果文件
 	cv::FileStorage fs;
@@ -389,7 +390,8 @@ void SphereDetector::setInputCloud(pcl::PointCloud<pcl::PointXYZI>::Ptr cloud){
 	pcl::copyPointCloud(*cloud_filtered, *cloud_sor4planar); //复制
 
 	int i = 0, nr_points = (int)cloud_filtered->points.size();
-	while (cloud_sor4planar->points.size() > 0.25 * nr_points)
+	//若剩余点大于阈值则继续找平面
+	while (cloud_sor4planar->points.size() > 10000)
 	{
 		// Segment the largest planar component from the remaining cloud
 		ne.setInputCloud(cloud_sor4planar);

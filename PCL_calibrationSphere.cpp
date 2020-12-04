@@ -68,7 +68,7 @@ int main(int argc, char** argv)
   sdet.readParam("sphere_param.json");
   sdet.printParam();
 
-  Visualizer vis("3D Viewer",2,2);
+  Visualizer vis("3D Viewer",3,2);
   
 
 

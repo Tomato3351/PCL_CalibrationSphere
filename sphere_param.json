@@ -12,10 +12,10 @@
 	"SORMeanK":50,
 	"SORStddevMulThresh":1,
 	
-	"PLANormalKSearch":50,
+	"PLANormalKSearch":30,
 	"PLANormalDistanceWeight":0.1,
-	"PLAMaxIterations":300,
-	"PLADistanceThreshold":20,
+	"PLAMaxIterations":1500,
+	"PLADistanceThreshold":10,
 	
 	"SPHNormalKSearch":30,
 	"SPHNormalDistanceWeight":0.05,

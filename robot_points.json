@@ -1,7 +1,7 @@
 {
 	"calibdataPath":"calib_data/",	
 	"calibdataFilename":"CALIB_DATA.xml",
-	"pcdFilePath":"D:/projects/LUCID_paperbox828/CapturePCD/Images/11/",
+	"pcdFilePath":"D:/projects/LUCID_paperbox828/CapturePCD/Images/13/",
 	"mode":"EyeInHand",
 	"coordinateDifference": 0,
 	"estimateMethod":"FromCorr",
@@ -11,7 +11,7 @@
         "cols": 3,
         "dt": "f",
         "data": [
-		1000.0, 0.0, 862.0
+		1800.00, 1200.00, 600.00
 		]
     },
 	"grab_pos":{
@@ -20,7 +20,7 @@
         "cols": 3,
         "dt": "f",
         "data": [
-		1000.0, 0.0, 862.0
+		1714.08, 1719.61, 350.0
 		]
     },
 	
